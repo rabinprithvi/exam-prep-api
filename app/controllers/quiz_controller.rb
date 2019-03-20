@@ -1,8 +1,7 @@
 class QuizController < ApplicationController
   def index
-  	create_quiz
-    
-  	render json: { quizz: Quiz.all }
+  	create_quiz  
+    @quiz  = Quiz.first  
   end
 
   private
