@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   get 'exams/:exam_id/subjects/:subject_id/quizz', to: 'quiz#index'
   get 'exams/:exam_id/subjects/:subject_id/topics/:topic_id/quizz', to: 'quiz#index'
   get 'exams/:exam_id/subjects/:subject_id/topics/:topic_id/chapters/:chapter_id/quizz', to: 'quiz#index'
+
+  resources :quiz, only: [:update]
 end
 # Enpoints
 
@@ -15,7 +17,8 @@ end
 # GET /exams/id/subjects/id/topics/id/chapter/id/quizz
 
 # API to answer question
-# PATCH /quizz/id/update => CREATE => user_id, question_id, answer_id, right_answer, skipped
+# PATCH /quizz/id/update => UPDATE => user_id, question_id, answer_id
+# /quiz/289/update?response=1
 
 # API to display progress within exam / subject / topic / chapter
 # % of correct answers
