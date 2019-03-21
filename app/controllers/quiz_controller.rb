@@ -1,22 +1,11 @@
 class QuizController < ApplicationController
   def index
-  	create_quiz  
-    @quiz  = Quiz.all
-  end
+  	questions = Exam.find(params[:exam_id]).questions if params[:exam_id]
+    questions = Subject.find(params[:topic_id]).questions if params[:subject_id]
+    questions = Topic.find(params[:subject_id]).questions if params[:topic_id]
+    questions = Chapter.find(params[:chapter_id]).questions if params[:chapter_id]
 
-  private
-
-  def create_quiz
-  	# Issue unissued questions
-  	# If unissued question = 0 ,  issue skipped questions
-  	exam_id = params[:exam_id]
-  	subject_id = params[:subject_id]
-  	topic_id = params[:topic_id]
-  	chapter_id = params[:chapter_id]
-
-  	exam = Exam.find(exam_id.to_i) if params[:exam_id]
-
-  	exam.questions.each do |question|
+  	@quiz = questions.map do |question|
   		  User.first.quiz.create(question: question)
     end
   end

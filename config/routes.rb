@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get 'exams/:exam_id/quizz', to: 'quiz#index'
   get 'exams/:exam_id/subjects/:subject_id/quizz', to: 'quiz#index'
+  get 'exams/:exam_id/subjects/:subject_id/topics/:topic_id/quizz', to: 'quiz#index'
+  get 'exams/:exam_id/subjects/:subject_id/topics/:topic_id/chapters/:chapter_id/quizz', to: 'quiz#index'
 end
 # Enpoints
 
