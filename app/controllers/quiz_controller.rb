@@ -1,7 +1,7 @@
 class QuizController < ApplicationController
   def index
   	create_quiz  
-    @quiz  = Quiz.first  
+    @quiz  = Quiz.all
   end
 
   private
@@ -14,16 +14,10 @@ class QuizController < ApplicationController
   	topic_id = params[:topic_id]
   	chapter_id = params[:chapter_id]
 
-  	if exam_id
-  		exam = Exam.find(exam_id.to_i)
-  		questions = exam.questions
-  	end
+  	exam = Exam.find(exam_id.to_i) if params[:exam_id]
 
-  	questions.all.each do |question|
-      question.answers.each do |answer|
-  		  User.first.quiz.create(question: question, answer: answer)
-      end
+  	exam.questions.each do |question|
+  		  User.first.quiz.create(question: question)
     end
-
   end
 end

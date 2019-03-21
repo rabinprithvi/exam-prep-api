@@ -47,13 +47,11 @@ ActiveRecord::Schema.define(version: 20190320042201) do
   create_table "quizz", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "question_id"
-    t.integer  "answer_id"
-    t.boolean  "is_selected"
+    t.integer  "response"
     t.boolean  "is_correct"
     t.boolean  "is_skipped"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.index ["answer_id"], name: "index_quizz_on_answer_id"
     t.index ["question_id"], name: "index_quizz_on_question_id"
     t.index ["user_id"], name: "index_quizz_on_user_id"
   end
