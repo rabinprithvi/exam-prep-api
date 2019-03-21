@@ -1,3 +1,4 @@
+require 'core_extensions/fixnum/percent'
 class QuizController < ApplicationController
   def index
   	questions = Exam.find(params[:exam_id]).questions if params[:exam_id]
@@ -24,5 +25,30 @@ class QuizController < ApplicationController
     quiz.update(response: response.id,
                 is_correct: is_correct,
                 is_skipped: is_skipped)
+  end
+
+  def score
+    questions = Exam.find(params[:exam_id]).questions if params[:exam_id]
+    questions = Subject.find(params[:topic_id]).questions if params[:subject_id]
+    questions = Topic.find(params[:subject_id]).questions if params[:topic_id]
+    questions = Chapter.find(params[:chapter_id]).questions if params[:chapter_id]
+
+    issued_questions = User.first.quiz
+    unseen_questions = issued_questions.where(response: nil)
+    questions_taken = issued_questions.where(is_skipped: false).where.not(response: nil)
+    correct_answers = questions_taken.where(is_correct: true)
+    wrong_answers = questions_taken.where(is_correct:false)
+    skipped_questions = issued_questions.where(is_skipped: true)
+
+    @correct_answers = correct_answers.count.percent_of issued_questions.count
+    @wrong_answers = wrong_answers.count.percent_of issued_questions.count
+    @skipped_questions = skipped_questions.count.percent_of issued_questions.count 
+    @unseen_questions = unseen_questions.count.percent_of  issued_questions.count
+  end
+end
+
+class Fixnum
+  def percent_of(n)
+    (self.to_f / n.to_f * 100.0).round
   end
 end
