@@ -16,22 +16,10 @@ class QuizController < ApplicationController
   end
 
   def score
-    questions = Exam.find(params[:exam_id]).questions if params[:exam_id]
-    questions = Subject.find(params[:topic_id]).questions if params[:subject_id]
-    questions = Topic.find(params[:subject_id]).questions if params[:topic_id]
-    questions = Chapter.find(params[:chapter_id]).questions if params[:chapter_id]
-
-    issued_questions = user.quiz
-    unseen_questions = issued_questions.where(response: nil)
-    questions_taken = issued_questions.where(is_skipped: false).where.not(response: nil)
-    correct_answers = questions_taken.where(is_correct: true)
-    wrong_answers = questions_taken.where(is_correct:false)
-    skipped_questions = issued_questions.where(is_skipped: true)
-
-    @correct_answers = correct_answers.count.percent_of issued_questions.count
-    @wrong_answers = wrong_answers.count.percent_of issued_questions.count
-    @skipped_questions = skipped_questions.count.percent_of issued_questions.count 
-    @unseen_questions = unseen_questions.count.percent_of  issued_questions.count
+    @correct_answers = quiz.correct.count.percent_of quiz_count
+    @wrong_answers = quiz.wrong.count.percent_of quiz_count
+    @skipped_questions = quiz.skipped.count.percent_of quiz_count 
+    @unseen_questions = quiz.unresponded.count.percent_of  quiz_count
   end
 
   private
@@ -41,7 +29,7 @@ class QuizController < ApplicationController
   end
 
   def issued_questions
-    issued_question_ids = user.quizz.where.not(response: nil).pluck(:question_id) 
+    issued_question_ids = quiz.where.not(response: nil).pluck(:question_id) 
     Question.where(id: issued_question_ids) 
   end
 
@@ -54,16 +42,24 @@ class QuizController < ApplicationController
 
   def unissued_quiz
     unissued_questions.shuffle.map do |question|
-        user.quizz.find_or_create_by(question: question)
+        quiz.find_or_create_by(question: question)
     end
   end
 
   def skipped_quiz
-    User.first.quiz.where(is_skipped: true).shuffle
+    quiz.where(is_skipped: true).shuffle
   end
 
   def user
     User.first
+  end
+
+  def quiz
+    user.quizz
+  end
+
+  def quiz_count
+    quiz.count
   end
 end
 
