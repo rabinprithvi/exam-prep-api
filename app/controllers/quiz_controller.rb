@@ -1,19 +1,7 @@
-require 'core_extensions/fixnum/percent'
 class QuizController < ApplicationController
   def index
-  	questions = Exam.find(params[:exam_id]).questions if params[:exam_id]
-    questions = Subject.find(params[:topic_id]).questions if params[:subject_id]
-    questions = Topic.find(params[:subject_id]).questions if params[:topic_id]
-    questions = Chapter.find(params[:chapter_id]).questions if params[:chapter_id]
-    
-    issued_question_ids = Quiz.where.not(response: nil).pluck(:question_id) 
-    issued_questions = Question.where(id: issued_question_ids) 
-    questions = questions - issued_questions 
-
-  	@quiz = questions.shuffle.map do |question|
-  		  User.first.quiz.find_or_create_by(question: question)
-    end
-    @quiz = User.first.quiz.where(is_skipped: true).shuffle if @quiz.empty?
+    @quiz = unissued_quiz 
+    @quiz = skipped_quiz if @quiz.empty?
   end
 
   def update
@@ -33,7 +21,7 @@ class QuizController < ApplicationController
     questions = Topic.find(params[:subject_id]).questions if params[:topic_id]
     questions = Chapter.find(params[:chapter_id]).questions if params[:chapter_id]
 
-    issued_questions = User.first.quiz
+    issued_questions = user.quiz
     unseen_questions = issued_questions.where(response: nil)
     questions_taken = issued_questions.where(is_skipped: false).where.not(response: nil)
     correct_answers = questions_taken.where(is_correct: true)
@@ -44,6 +32,38 @@ class QuizController < ApplicationController
     @wrong_answers = wrong_answers.count.percent_of issued_questions.count
     @skipped_questions = skipped_questions.count.percent_of issued_questions.count 
     @unseen_questions = unseen_questions.count.percent_of  issued_questions.count
+  end
+
+  private
+
+  def unissued_questions    
+    all_questions - issued_questions 
+  end
+
+  def issued_questions
+    issued_question_ids = user.quizz.where.not(response: nil).pluck(:question_id) 
+    Question.where(id: issued_question_ids) 
+  end
+
+  def all_questions
+    questions = Exam.find(params[:exam_id]).questions if params[:exam_id]
+    questions = Subject.find(params[:topic_id]).questions if params[:subject_id]
+    questions = Topic.find(params[:subject_id]).questions if params[:topic_id]
+    questions = Chapter.find(params[:chapter_id]).questions if params[:chapter_id]
+  end
+
+  def unissued_quiz
+    unissued_questions.shuffle.map do |question|
+        user.quizz.find_or_create_by(question: question)
+    end
+  end
+
+  def skipped_quiz
+    User.first.quiz.where(is_skipped: true).shuffle
+  end
+
+  def user
+    User.first
   end
 end
 
