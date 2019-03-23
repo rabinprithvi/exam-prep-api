@@ -5,9 +5,9 @@ Rails.application.routes.draw do
       get 'score'
     end
   end
-  resources :chapters, concerns: :quizzable
-  resources :topics, concerns: :quizzable
-  resources :subjects, concerns: :quizzable
-  resources :exams, concerns: :quizzable
+  resources :chapters, concerns: :quizzable, only: []
+  resources :topics, concerns: :quizzable, only: []
+  resources :subjects, concerns: :quizzable, only: []
+  resources :exams, concerns: :quizzable, only: []
   resources :quiz, only: [:update]
 end
