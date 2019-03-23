@@ -1,3 +1,4 @@
+json.partial! 'shared/success'
 json.quizz @quiz do|quiz|
  json.quiz_id quiz.id
  json.question quiz.question.question

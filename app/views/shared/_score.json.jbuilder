@@ -1,3 +1,4 @@
+json.partial! 'shared/success'
 json.score do
  json.correct_answers @score[:correct_answers].to_s + '%'
  json.wrong_answers @score[:wrong_answers].to_s + '%'
