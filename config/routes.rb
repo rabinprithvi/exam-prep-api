@@ -7,5 +7,7 @@ Rails.application.routes.draw do
   end
   resources :chapters, concerns: :quizzable
   resources :topics, concerns: :quizzable
+  resources :subjects, concerns: :quizzable
+  resources :exams, concerns: :quizzable
   resources :quiz, only: [:update]
 end

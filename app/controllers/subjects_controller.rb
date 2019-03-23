@@ -1,0 +1,2 @@
+class SubjectsController < LevelsController
+end

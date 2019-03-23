@@ -1,0 +1,2 @@
+class ExamsController < LevelsController
+end
