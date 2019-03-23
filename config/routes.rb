@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
   get 'exams/:exam_id/quizz', to: 'quiz#index'
-  get 'exams/:exam_id/subjects/:subject_id/quizz', to: 'quiz#index'
-  get 'exams/:exam_id/subjects/:subject_id/topics/:topic_id/quizz', to: 'quiz#index'
-  get 'exams/:exam_id/subjects/:subject_id/topics/:topic_id/chapters/:chapter_id/quizz', to: 'quiz#index'
+  get 'subjects/:subject_id/quizz', to: 'quiz#index'
+  get 'topics/:topic_id/quizz', to: 'quiz#index'
+
+  resources :chapters do
+  	member do
+  	 get 'quiz'
+  	 get 'score'
+  	end
+  end
 
   get 'exams/:exam_id/score', to: 'quiz#score'
   get 'exams/:exam_id/subjects/:subject_id/score', to: 'quiz#score'
