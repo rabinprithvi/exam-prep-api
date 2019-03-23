@@ -45,7 +45,6 @@ ActiveRecord::Schema.define(version: 20190320042201) do
   end
 
   create_table "quizz", force: :cascade do |t|
-    t.integer  "user_id"
     t.integer  "question_id"
     t.integer  "response"
     t.boolean  "is_correct"
@@ -53,7 +52,6 @@ ActiveRecord::Schema.define(version: 20190320042201) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["question_id"], name: "index_quizz_on_question_id"
-    t.index ["user_id"], name: "index_quizz_on_user_id"
   end
 
   create_table "subjects", force: :cascade do |t|

@@ -5,12 +5,12 @@ class QuizPicker
 
 	def unissued_quiz
     unissued_questions.shuffle.map do |question|
-      quiz.find_or_create_by(question: question)
+      Quiz.find_or_create_by(question: question)
     end
   end
 
 	def skipped_quiz
-    quiz.where(is_skipped: true).shuffle
+    Quiz.where(is_skipped: true).shuffle
   end
 
   private 
@@ -24,11 +24,7 @@ class QuizPicker
   end
 
   def issued_questions
-    issued_question_ids = quiz.where.not(response: nil).pluck(:question_id) 
+    issued_question_ids = Quiz.where.not(response: nil).pluck(:question_id) 
     Question.where(id: issued_question_ids) 
-  end
-
-  def quiz
-    Quiz.all
   end
 end
