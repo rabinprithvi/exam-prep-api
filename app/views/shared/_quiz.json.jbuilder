@@ -1,5 +1,5 @@
 json.partial! 'shared/success'
-json.quizz @quiz do|quiz|
+json.quiz @quiz do|quiz|
  json.quiz_id quiz.id
  json.question quiz.question.question
   json.options quiz.question.answers.shuffle do|answer|

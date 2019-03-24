@@ -5,9 +5,11 @@ Rails.application.routes.draw do
       get 'score'
     end
   end
-  resources :chapters, concerns: :quizzable, only: []
-  resources :topics, concerns: :quizzable, only: []
-  resources :subjects, concerns: :quizzable, only: []
-  resources :exams, concerns: :quizzable, only: []
-  resources :quiz, only: [:update]
+
+  resources :chapters, concerns: :quizzable, only: [], defaults: { format: :json }
+  resources :topics, concerns: :quizzable, only: [], defaults: { format: :json }
+  resources :subjects, concerns: :quizzable, only: [], defaults: { format: :json }
+  resources :exams, concerns: :quizzable, only: [], defaults: { format: :json }
+  resources :quiz, only: [:update], defaults: { format: :json }
+  
 end
