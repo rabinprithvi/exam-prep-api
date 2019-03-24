@@ -7,5 +7,11 @@ FactoryBot.define do
     factory :correct_answer do
     	is_correct { true }
     end
+
+    factory :skipped_answer do |a|
+    	option { 'Skip' }
+    end
+    	
+    
   end
 end
