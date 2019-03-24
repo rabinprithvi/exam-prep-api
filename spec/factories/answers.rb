@@ -1,7 +1,11 @@
 FactoryBot.define do
   factory :answer do
-    option '2*22/7*r'
-    is_correct true
-    association :question
+    option { 'test' }
+    is_correct { false }
+    association :question 
+
+    factory :correct_answer do
+    	is_correct { true }
+    end
   end
 end
