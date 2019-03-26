@@ -1,6 +1,8 @@
 class Quiz < ApplicationRecord
+  
   self.table_name =  'quizz'
 
+  # If user is implemented, quiz should also belong to user
   belongs_to :question
 
   scope :answered, -> { where( is_skipped: false ) }
