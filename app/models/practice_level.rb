@@ -1,0 +1,19 @@
+class PracticeLevel < ApplicationRecord
+  belongs_to :chapter
+  enum level: [:easy, :medium, :hard]
+
+  def progress_level
+  	level
+  end
+
+  def move_next_level
+  	update(level: next_level)
+  end
+
+  private
+
+  def next_level
+  	return  'medium' if progress_level == 'easy'
+  	return  'hard' if progress_level != 'easy'
+  end
+end

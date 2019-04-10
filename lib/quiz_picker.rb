@@ -20,7 +20,14 @@ class QuizPicker
   end
 
   def all_questions
-    questions = @level.questions
+    # For now, issue questions at chapter level to test progress
+    # so here,  @level = chapter record
+    if @level.practice_level
+      practice_level = @level.practice_level
+    else
+      practice_level = PracticeLevel.create(chapter: @level, level: 0)
+    end
+    questions = @level.questions.where("category_type <= #{practice_level.level_before_type_cast}")
   end
 
   def issued_questions

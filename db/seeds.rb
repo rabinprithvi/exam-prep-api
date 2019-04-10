@@ -24,8 +24,17 @@ end
 Chapter.all.each do|chapter|
   # Question model, enum category_type: [:easy, :medium, :hard]
   chapter.questions.create([{ question: 'Question1', category_type: 0 },
-                            { question: 'Question2', category_type: 1 },
-                            { question: 'Question3', category_type: 2 }])
+                            { question: 'Question2', category_type: 0 },
+                            { question: 'Question3', category_type: 0 },
+                            { question: 'Question4', category_type: 0 },
+                            { question: 'Question5', category_type: 1 },
+                            { question: 'Question6', category_type: 1 },
+                            { question: 'Question7', category_type: 1 },
+                            { question: 'Question8', category_type: 1 },
+                            { question: 'Question9', category_type: 2},
+                            { question: 'Question10', category_type: 2 },
+                            { question: 'Question11', category_type: 2 },
+                            { question: 'Question12', category_type: 2 }])
 end
 
 Question.all.each do |question|

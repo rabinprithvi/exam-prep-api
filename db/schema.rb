@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190320042201) do
+ActiveRecord::Schema.define(version: 20190410161334) do
 
   create_table "answers", force: :cascade do |t|
     t.string   "option",                      null: false
@@ -33,6 +33,14 @@ ActiveRecord::Schema.define(version: 20190320042201) do
     t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "practice_levels", force: :cascade do |t|
+    t.integer  "chapter_id"
+    t.integer  "level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chapter_id"], name: "index_practice_levels_on_chapter_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -64,7 +72,7 @@ ActiveRecord::Schema.define(version: 20190320042201) do
 
   create_table "topics", force: :cascade do |t|
     t.string   "name",       null: false
-    t.integer  "subject_id"
+    t.integer  "subject_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["subject_id"], name: "index_topics_on_subject_id"
