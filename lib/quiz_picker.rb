@@ -21,7 +21,7 @@ class QuizPicker
 
   def all_questions
     # For now, user practices at chapter level from easy to hard
-    # so here,  @level = chapter record for the route /chapters/1/quiz
+    # so here,  @level = chapter record for the route /chapters/[:id]/quiz
     questions = @level.questions.where("category_type <= #{practice_level.level_before_type_cast}")
   end
 

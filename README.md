@@ -37,6 +37,8 @@ e.g., curl -X PATCH http://localhost:3000/quiz/:quiz_id.json?response=:answer_id
 
 e.g., http://localhost:3000/topics/2/score, http://localhost:3000/exams/3/score
 
+Note: For now, only chapter level quiz is enabled for this branch to test difficulty level
+
 ### App Initialization
 
 Run bin/rake db:seed to load the test data 
