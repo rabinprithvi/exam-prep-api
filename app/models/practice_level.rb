@@ -13,7 +13,6 @@ class PracticeLevel < ApplicationRecord
   private
 
   def next_level
-  	return  'medium' if progress_level == 'easy'
-  	return  'hard' if progress_level != 'easy'
+  	easy?  ? 'medium' : 'hard'
   end
 end
