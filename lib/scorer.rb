@@ -23,11 +23,15 @@ class Scorer
 
   def level_quiz
     questions = @level.questions.pluck(:id)
-    @quiz = Quiz.where(question_id: questions)
+    @quiz = Quiz.where(question_id: questions, user: user)
   end
 
   def quiz_count
     @quiz.count
+  end
+
+  def user
+    User.first
   end
 end
 

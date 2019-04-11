@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190410161334) do
+ActiveRecord::Schema.define(version: 20190411014951) do
 
   create_table "answers", force: :cascade do |t|
     t.string   "option",                      null: false
@@ -40,7 +40,9 @@ ActiveRecord::Schema.define(version: 20190410161334) do
     t.integer  "level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
     t.index ["chapter_id"], name: "index_practice_levels_on_chapter_id"
+    t.index ["user_id"], name: "index_practice_levels_on_user_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -59,7 +61,9 @@ ActiveRecord::Schema.define(version: 20190410161334) do
     t.boolean  "is_skipped"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "user_id"
     t.index ["question_id"], name: "index_quizz_on_question_id"
+    t.index ["user_id"], name: "index_quizz_on_user_id"
   end
 
   create_table "subjects", force: :cascade do |t|
@@ -76,6 +80,12 @@ ActiveRecord::Schema.define(version: 20190410161334) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["subject_id"], name: "index_topics_on_subject_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

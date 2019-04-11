@@ -1,5 +1,7 @@
 class PracticeLevel < ApplicationRecord
   belongs_to :chapter
+  belongs_to :user
+  
   enum level: [:easy, :medium, :hard]
 
   def progress_level

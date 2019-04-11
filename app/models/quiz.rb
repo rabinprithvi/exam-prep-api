@@ -4,6 +4,7 @@ class Quiz < ApplicationRecord
 
   # If user is implemented, quiz should also belong to user
   belongs_to :question
+  belongs_to :user
 
   scope :answered, -> { where( is_skipped: false ) }
   scope :skipped, -> { where( is_skipped: true ) }
