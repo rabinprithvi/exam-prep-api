@@ -2,20 +2,13 @@ require 'rails_helper'
 
 RSpec.describe "Quiz", type: :request do
   describe "creates quiz, accepts answer and calculates score" do
-    before(:each) do
-      FactoryBot.create(:question)
-
-      FactoryBot.create(:correct_answer, question: Question.first)
-      FactoryBot.create(:skipped_answer, question: Question.first)
-      FactoryBot.create(:answer, question: Question.first)
-    end
 
     it "creates quiz" do
       get quiz_chapter_path Chapter.first
       api_response = JSON.parse(response.body)
 
       expect(api_response['status']).to eq 200
-      expect(api_response['quiz'].size).to eq 1
+      expect(api_response['quiz'].size).to eq 4
       expect(Quiz.any?).to be_truthy
     end
 
@@ -40,7 +33,7 @@ RSpec.describe "Quiz", type: :request do
           api_response = JSON.parse(response.body)
 
           expect(api_response['status']).to eq 200
-          expect(api_response['score']['correct_answers']).to eq '100%'
+          expect(api_response['score']['correct_answers']).to eq '25%'
         end
       end
 
@@ -55,7 +48,7 @@ RSpec.describe "Quiz", type: :request do
           api_response = JSON.parse(response.body)
 
           expect(api_response['status']).to eq 200
-          expect(api_response['score']['wrong_answers']).to eq '100%'
+          expect(api_response['score']['wrong_answers']).to eq '25%'
         end
       end
 
@@ -70,7 +63,7 @@ RSpec.describe "Quiz", type: :request do
           api_response = JSON.parse(response.body)
 
           expect(api_response['status']).to eq 200
-          expect(api_response['score']['skipped_questions']).to eq '100%'
+          expect(api_response['score']['skipped_questions']).to eq '25%'
         end
       end
 
